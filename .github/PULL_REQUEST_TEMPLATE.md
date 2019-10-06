@@ -2,9 +2,10 @@
 
 <!--- Coding guidelines: -->
 <!--- 1. Installed packages in the Dockerfiles should be in alphabetical order -->
-<!--- 2. Indentation style (tabs vs 4 spaces vs 1 space) should match the rest of the document -->
-<!--- 3. Readme is auto generated from readme-vars.yml, make your changes there -->
-<!--- 4. Enter a new entry into the Changelog section of readme-vars.yml to describe the changes -->
+<!--- 2. Changes to Dockerfile should be replicated in Dockerfile.armhf and Dockerfile.aarch64 if applicable -->
+<!--- 3. Indentation style (tabs vs 4 spaces vs 1 space) should match the rest of the document -->
+<!--- 4. Readme is auto generated from readme-vars.yml, make your changes there -->
+<!--- 5. Enter a new entry into the Changelog section of readme-vars.yml to briefly describe the changes -->
 
 
 ## Description
