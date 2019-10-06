@@ -22,7 +22,7 @@ Issue tracker is **ONLY** used for reporting bugs. Please use [our discord serve
 **How docker service was installed:**      
 <!--- Providing context helps us come up with a solution that is most useful in the real world -->
 
-## Command used to create docker container
+## Command used to create docker container (run/create/compose/screenshot)
 <!--- Provide your docker create/run command or compose yaml snippet, or a screenshot of settings if using a gui to create the container -->
 
 ## Docker logs
