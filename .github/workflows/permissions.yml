@@ -6,5 +6,4 @@ on:
       - '**/finish'
 jobs:
   permission_check:
-    runs-on: ubuntu-latest
     uses: aptalca/testing/.github/workflows/init-svc-executable-permissions.yml@master
