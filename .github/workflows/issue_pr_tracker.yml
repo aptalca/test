@@ -9,7 +9,7 @@ on:
     types: [opened,closed,reopened,review_requested,review_request_removed,labeled,unlabeled]
 
 jobs:
-  Add New Issue:
+  add-new-issue:
     runs-on: ubuntu-latest
     steps:
       - uses: alex-page/github-project-automation-plus@v0.8.3
