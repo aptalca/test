@@ -9,10 +9,11 @@ on:
     types: [opened,closed,reopened,review_requested,review_request_removed,labeled,unlabeled]
 
 jobs:
-  add-new-issue:
+  manage-project:
     runs-on: ubuntu-latest
     steps:
-      - uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+      - name: Add New Issues
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
@@ -20,3 +21,12 @@ jobs:
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: 'Issues'
+      - name: Move Closed Issues
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ github.event_name == 'issues' && github.event.action == 'closed' }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Done'
