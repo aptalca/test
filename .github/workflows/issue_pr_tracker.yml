@@ -15,6 +15,6 @@ jobs:
       - uses: alex-page/github-project-automation-plus@v0.8.3
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
         with:
-          project: Issue & PR Tracker
-          column: Issues
+          project: test
+          column: test
           repo-token: ${{ secrets.PROJECT_PAT }}
