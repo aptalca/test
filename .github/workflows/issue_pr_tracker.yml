@@ -15,7 +15,7 @@ jobs:
       - uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
         with:
-          ghtoken: ${{ secrets.PROJECT_PAT }}
+          gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
