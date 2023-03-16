@@ -17,4 +17,4 @@ jobs:
         with:
           project: Issue & PR Tracker
           column: Issues
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.PROJECT_PAT }}
