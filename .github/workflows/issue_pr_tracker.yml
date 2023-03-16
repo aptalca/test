@@ -12,7 +12,7 @@ jobs:
   manage-project:
     runs-on: ubuntu-latest
     steps:
-      - name: Add New Issues
+      - name: Add New or Reopened Issues
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
         with:
@@ -21,12 +21,14 @@ jobs:
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: 'Issues'
-      - name: Move Closed Issues
+      - name: Add New or Reopened PRs Without Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        if: ${{ github.event_name == 'issues' && github.event.action == 'closed' }}
+        if: ${{ (github.event.action == 'opened' || github.event.action == 'reopened') && \
+              ((github.event_name == 'pull_request' && github.event.pull_request.requested_reviewers != '' && github.event.pull_request.requested_teams != '') || \
+              (github.event_name == 'pull_request_target' && github.event.pull_request_target.requested_reviewers != '' && github.event.pull_request_target.requested_teams != '')) }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
-          status_value: 'Done'
+          status_value: 'PRs'
