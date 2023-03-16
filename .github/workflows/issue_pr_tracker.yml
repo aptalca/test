@@ -19,4 +19,4 @@ jobs:
           user: aptalca
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
-          status_value: test
+          status_value: 'Issues'
