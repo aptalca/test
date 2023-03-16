@@ -12,9 +12,11 @@ jobs:
   add-new-issue:
     runs-on: ubuntu-latest
     steps:
-      - uses: alex-page/github-project-automation-plus@v0.8.3
+      - uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
         with:
-          project: test
-          column: test
-          repo-token: ${{ secrets.PROJECT_PAT }}
+          ghtoken: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: test
