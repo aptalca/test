@@ -21,7 +21,7 @@ jobs:
           status_value: 'Issues'
       - name: Add New or Reopened PRs Without Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        if: ${{ (github.event.action == 'opened' || github.event.action == 'reopened') && github.event_name == 'pull_request' && fromJson(github.event.pull_request.requested_reviewers)[0] == null && fromJson(github.event.pull_request.requested_teams)[0] == null }}
+        if: ${{ (github.event.action == 'opened' || github.event.action == 'reopened') && github.event_name == 'pull_request' && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
