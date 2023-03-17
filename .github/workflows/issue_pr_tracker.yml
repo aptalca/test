@@ -10,9 +10,6 @@ jobs:
   manage-project:
     runs-on: ubuntu-latest
     steps:
-      - name: Show info
-        run: |
-          echo ${{ github.event.pull_request.requested_reviewers }}
       - name: Add New or Reopened Issues
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
@@ -24,7 +21,7 @@ jobs:
           status_value: 'Issues'
       - name: Add New or Reopened PRs Without Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        if: ${{ (github.event.action == 'opened' || github.event.action == 'reopened') && github.event_name == 'pull_request' && github.event.pull_request.requested_reviewers == 0 && github.event.pull_request.requested_teams == 0 }}
+        if: ${{ (github.event.action == 'opened' || github.event.action == 'reopened') && github.event_name == 'pull_request' && github.event.pull_request.requested_reviewers == '[]' && github.event.pull_request.requested_teams == '[]' }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
