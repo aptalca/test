@@ -10,6 +10,11 @@ jobs:
   manage-project:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump payload info
+        uses: Dovyski/payload-info-action@master
+        with:
+          filter_push: '.'
+          filter_pull_request: '.pull_request'
       - name: Add New or Reopened Issues
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
