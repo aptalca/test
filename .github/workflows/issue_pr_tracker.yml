@@ -10,6 +10,9 @@ jobs:
   manage-project:
     runs-on: ubuntu-latest
     steps:
+      - name: Show info
+        run: |
+          echo ${{ github.event.pull_request.requested_reviewers }}
       - name: Add New or Reopened Issues
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
