@@ -10,15 +10,24 @@ jobs:
   manage-project:
     runs-on: ubuntu-latest
     steps:
-      - name: Add New or Reopened Issues
+      - name: Add New or Reopened Issues Not Labeled Invalid
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened') }}
+        if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'labeled' || github.event.action == 'unlabeled') && ! contains(github.event.issues.labels.*.name, 'invalid') }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: 'Issues'
+      - name: Add Issues Labeled Invalid
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'labeled' || github.event.action == 'unlabeled') && contains(github.event.issues.labels.*.name, 'invalid') }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Insufficient Info'
       - name: Add PRs Without Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'pull_request' && ((github.event.action == 'opened' || github.event.action == 'reopened') && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null) || (github.event.action == 'review_request_removed' && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null) }}
