@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: Dump payload
         env:
+          EVENT_NAME: ${{ toJson(github.event_name) }}
           GITHUB_CONTEXT: ${{ toJson(github.event) }}
         run: |
+          echo "$EVENT_NAME"
           echo "$GITHUB_CONTEXT"
       - name: Add Open Issues Not Labeled Invalid
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
