@@ -35,7 +35,7 @@ jobs:
           status_value: 'Insufficient Info'
       - name: Add PRs Without Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        if: ${{ github.event_name == 'pull_request' && ((github.event.action == 'opened' || github.event.action == 'reopened') && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null) || (github.event.action == 'review_request_removed' && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null) }}
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
@@ -44,7 +44,7 @@ jobs:
           status_value: 'PRs'
       - name: Add PRs With Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        if: ${{ github.event_name == 'pull_request' && github.event.action == 'review_requested' }}
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && (github.event.pull_request.requested_reviewers[0] != null || github.event.pull_request.requested_teams[0] != null) }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
