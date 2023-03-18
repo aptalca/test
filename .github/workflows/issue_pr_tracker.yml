@@ -24,7 +24,7 @@ jobs:
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: 'Issues'
-      - name: Add Issues Labeled Invalid
+      - name: Add Open Issues Labeled Invalid
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'invalid') }}
         with:
@@ -33,7 +33,7 @@ jobs:
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: 'Insufficient Info'
-      - name: Add PRs Without Review Requests
+      - name: Add Open PRs Without Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null }}
         with:
@@ -42,7 +42,7 @@ jobs:
           project_id: 2
           resource_node_id: ${{ github.event.pull_request.node_id }}
           status_value: 'PRs'
-      - name: Add PRs With Review Requests
+      - name: Add Open PRs With Review Requests
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && (github.event.pull_request.requested_reviewers[0] != null || github.event.pull_request.requested_teams[0] != null) }}
         with:
