@@ -17,15 +17,24 @@ jobs:
         run: |
           echo "$EVENT_NAME"
           echo "$GITHUB_CONTEXT"
-      - name: Add Open Issues Not Labeled Invalid
+      - name: Add Open Docker Related Issues Not Labeled Invalid
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && ! contains(github.event.issue.labels.*.name, 'invalid') }}
+        if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && startsWith(github.event.repository.name, 'docker-') && ! contains(github.event.issue.labels.*.name, 'invalid') }}
         with:
           gh_token: ${{ secrets.PROJECT_PAT }}
           user: aptalca
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: 'Issues'
+      - name: Add Open Non-Docker Related Issues Not Labeled Invalid
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && ! startsWith(github.event.repository.name, 'docker-') && ! contains(github.event.issue.labels.*.name, 'invalid') }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Non-Docker Issues'
       - name: Add Open Issues Labeled Invalid
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'invalid') }}
