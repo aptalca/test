@@ -9,11 +9,28 @@ env:
   MODNAME: "mod" #replace
 
 jobs:
+  set-vars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Vars
+        id: outputs
+        run: |
+          echo "GITHUB_REPO=${{ env.GITHUB_REPO }}" >> $GITHUB_OUTPUT
+          echo "ENDPOINT=${{ env.ENDPOINT }}" >> $GITHUB_OUTPUT
+          echo "BASEIMAGE=${{ env.BASEIMAGE }}" >> $GITHUB_OUTPUT
+          echo "MODNAME=${{ env.MODNAME }}" >> $GITHUB_OUTPUT
+    outputs:
+      GITHUB_REPO: ${{ steps.outputs.outputs.GITHUB_REPO }}
+      ENDPOINT: ${{ steps.outputs.outputs.ENDPOINT }}
+      BASEIMAGE: ${{ steps.outputs.outputs.BASEIMAGE }}
+      MODNAME: ${{ steps.outputs.outputs.MODNAME }}
+
   build:
     uses: aptalca/test/.github/workflows/callable-mod-builder.yml@master
     secrets: inherit
+    needs: set-vars
     with:
-      GITHUB_REPO: ${{ env.GITHUB_REPO }}
-      ENDPOINT: ${{ env.ENDPOINT }}
-      BASEIMAGE: ${{ env.BASEIMAGE }}
-      MODNAME: ${{ env.MODNAME }}
+      GITHUB_REPO: ${{ needs.set-vars.ouputs.GITHUB_REPO }}
+      ENDPOINT: ${{ needs.set-vars.ouputs.ENDPOINT }}
+      BASEIMAGE: ${{ needs.set-vars.ouputs.BASEIMAGE }}
+      MODNAME: ${{ needs.set-vars.ouputs.MODNAME }}
