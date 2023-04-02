@@ -25,14 +25,6 @@ jobs:
       BASEIMAGE: ${{ steps.outputs.outputs.BASEIMAGE }}
       MODNAME: ${{ steps.outputs.outputs.MODNAME }}
 
-  check-vars:
-    runs-on: ubuntu-latest
-    needs: set-vars
-    steps:
-      - name: Check vars
-        run: |
-          echo "GITHUB_REPO is ${{ needs.set-vars.outputs.GITHUB_REPO }}"
-
   build:
     uses: aptalca/test/.github/workflows/callable-mod-builder.yml@master
     secrets: inherit
