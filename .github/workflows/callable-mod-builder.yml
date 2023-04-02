@@ -25,6 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Dump payload
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+
       - name: Set Vars
         run: |
           echo "BASEIMAGE=${{ github.event.inputs.BASEIMAGE }}" >> $GITHUB_ENV
