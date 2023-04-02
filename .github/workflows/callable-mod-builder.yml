@@ -39,6 +39,17 @@ jobs:
           echo "GITHUB_REPO=${{ github.event.inputs.GITHUB_REPO }}" >> $GITHUB_ENV
           echo "MOD_VERSION=${{ github.event.inputs.MOD_VERSION }}" >> $GITHUB_ENV
 
+      - name: Dump vars
+        run: |
+          echo "BASEIMAGE is ${BASEIMAGE}"
+          echo "GITHUB_REPO is ${GITHUB_REPO}"
+          echo "MODNAME is ${MODNAME}"
+          echo "ENDPOINT is ${ENDPOINT}"
+          echo "MOD_VERSION is ${MOD_VERSION}"
+          echo "github.repository is ${{ github.repository }}"
+          echo "github.event.pull_request.base.ref is ${{ github.event.pull_request.base.ref }}"
+          echo "github.event.pull_request.base.repo.name is ${{ github.event.pull_request.base.repo.name }}"
+
       - name: Build image
         run: |
           docker build --no-cache --build-arg MOD_VERSION=${MOD_VERSION} -t ${{ github.sha }} .
