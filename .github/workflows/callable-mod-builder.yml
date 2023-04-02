@@ -33,11 +33,11 @@ jobs:
 
       - name: Set Vars
         run: |
-          echo "BASEIMAGE=${{ github.event.inputs.BASEIMAGE }}" >> $GITHUB_ENV
-          echo "MODNAME=${{ github.event.inputs.MODNAME }}" >> $GITHUB_ENV
-          echo "ENDPOINT=${{ github.event.inputs.ENDPOINT }}" >> $GITHUB_ENV
-          echo "GITHUB_REPO=${{ github.event.inputs.GITHUB_REPO }}" >> $GITHUB_ENV
-          echo "MOD_VERSION=${{ github.event.inputs.MOD_VERSION }}" >> $GITHUB_ENV
+          echo "BASEIMAGE=${{ inputs.BASEIMAGE }}" >> $GITHUB_ENV
+          echo "MODNAME=${{ inputs.MODNAME }}" >> $GITHUB_ENV
+          echo "ENDPOINT=${{ inputs.ENDPOINT }}" >> $GITHUB_ENV
+          echo "GITHUB_REPO=${{ inputs.GITHUB_REPO }}" >> $GITHUB_ENV
+          echo "MOD_VERSION=${{ inputs.MOD_VERSION }}" >> $GITHUB_ENV
 
       - name: Dump vars
         run: |
