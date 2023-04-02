@@ -1,0 +1,19 @@
+name: Build Image
+
+on: [push, pull_request, workflow_dispatch]
+
+env:
+  GITHUB_REPO: "aptalca/test" #don't modify
+  ENDPOINT: "aptalca/mods" #don't modify
+  BASEIMAGE: "base" #replace
+  MODNAME: "mod" #replace
+
+jobs:
+  build:
+    uses: aptalca/test/.github/workflows/callable-mod-builder.yml@master
+    secrets: inherit
+    with:
+      GITHUB_REPO: ${{ env.GITHUB_REPO }}
+      ENDPOINT: ${{ env.ENDPOINT }}
+      BASEIMAGE: ${{ env.BASEIMAGE }}
+      MODNAME: ${{ env.MODNAME }}
