@@ -31,14 +31,14 @@ jobs:
     steps:
       - name: Check vars
         run: |
-          echo "GITHUB_REPO is ${{ needs.set-vars.ouputs.GITHUB_REPO }}"
+          echo "GITHUB_REPO is ${{ needs.set-vars.outputs.GITHUB_REPO }}"
 
   build:
     uses: aptalca/test/.github/workflows/callable-mod-builder.yml@master
     secrets: inherit
     needs: set-vars
     with:
-      GITHUB_REPO: ${{ needs.set-vars.ouputs.GITHUB_REPO }}
-      ENDPOINT: ${{ needs.set-vars.ouputs.ENDPOINT }}
-      BASEIMAGE: ${{ needs.set-vars.ouputs.BASEIMAGE }}
-      MODNAME: ${{ needs.set-vars.ouputs.MODNAME }}
+      GITHUB_REPO: ${{ needs.set-vars.outputs.GITHUB_REPO }}
+      ENDPOINT: ${{ needs.set-vars.outputs.ENDPOINT }}
+      BASEIMAGE: ${{ needs.set-vars.outputs.BASEIMAGE }}
+      MODNAME: ${{ needs.set-vars.outputs.MODNAME }}
