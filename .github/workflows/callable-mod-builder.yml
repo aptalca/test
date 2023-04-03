@@ -71,8 +71,8 @@ jobs:
       - name: Tag image (PR)
         if: ${{ github.event.pull_request.base.ref == format('{0}-{1}', env.BASEIMAGE, env.MODNAME) && env.GITHUB_REPO == format('{0}/{1}', github.event.pull_request.base.repo.owner.login, github.event.pull_request.base.repo.name) }}
         run: |
-          docker tag ${{ github.sha }} ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${{ github.event.pull_request.number }}
-          docker tag ${{ github.sha }} ghcr.io/${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${{ github.event.pull_request.number }}
+          docker tag ${{ github.sha }} ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-pull_request_${{ github.event.pull_request.number }}
+          docker tag ${{ github.sha }} ghcr.io/${ENDPOINT}:${BASEIMAGE}-${MODNAME}-pull_request_${{ github.event.pull_request.number }}
 
       - name: Credential check
         if: ${{ github.ref == format('refs/heads/{0}-{1}', env.BASEIMAGE, env.MODNAME) && env.GITHUB_REPO == github.repository || github.event.pull_request.base.ref == format('{0}-{1}', env.BASEIMAGE, env.MODNAME) && env.GITHUB_REPO == format('{0}/{1}', github.event.pull_request.base.repo.owner.login, github.event.pull_request.base.repo.name) }}
@@ -106,7 +106,7 @@ jobs:
       - name: Push tags to GitHub Container Registry (PR)
         if: ${{ github.event.pull_request.base.ref == format('{0}-{1}', env.BASEIMAGE, env.MODNAME) && env.GITHUB_REPO == format('{0}/{1}', github.event.pull_request.base.repo.owner.login, github.event.pull_request.base.repo.name) && env.CR_USER && env.CR_PAT }}
         run: |
-          docker push ghcr.io/${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${{ github.event.pull_request.number }}
+          docker push ghcr.io/${ENDPOINT}:${BASEIMAGE}-${MODNAME}-pull_request_${{ github.event.pull_request.number }}
 
       - name: Login to DockerHub
         if: ${{ (github.ref == format('refs/heads/{0}-{1}', env.BASEIMAGE, env.MODNAME) && env.GITHUB_REPO == github.repository || github.event.pull_request.base.ref == format('{0}-{1}', env.BASEIMAGE, env.MODNAME) && env.GITHUB_REPO == format('{0}/{1}', github.event.pull_request.base.repo.owner.login, github.event.pull_request.base.repo.name)) && env.DOCKERUSER && env.DOCKERPASS }}
@@ -126,4 +126,4 @@ jobs:
       - name: Push tags to DockerHub (PR)
         if: ${{ github.event.pull_request.base.ref == format('{0}-{1}', env.BASEIMAGE, env.MODNAME) && env.GITHUB_REPO == format('{0}/{1}', github.event.pull_request.base.repo.owner.login, github.event.pull_request.base.repo.name) && env.DOCKERUSER && env.DOCKERPASS }}
         run: |
-          docker push ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${{ github.event.pull_request.number }}
+          docker push ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-pull_request_${{ github.event.pull_request.number }}
