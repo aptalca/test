@@ -119,8 +119,8 @@ jobs:
           docker push ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${{ github.sha }}
           docker push ${ENDPOINT}:${BASEIMAGE}-${MODNAME}
           if [[ -n "${MOD_VERSION}" ]]; then
-            docker ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${MOD_VERSION}
-            docker ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${MOD_VERSION}-${{ github.sha }}
+            docker push ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${MOD_VERSION}
+            docker push ${ENDPOINT}:${BASEIMAGE}-${MODNAME}-${MOD_VERSION}-${{ github.sha }}
           fi
 
       - name: Push tags to DockerHub (PR)
