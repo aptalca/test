@@ -31,7 +31,6 @@ jobs:
 
   build:
     uses: linuxserver/github-workflows/.github/workflows/docker-mod-builder.yml@v1
-    secrets: inherit
     needs: set-vars
     with:
       GITHUB_REPO: ${{ needs.set-vars.outputs.GITHUB_REPO }}
