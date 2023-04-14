@@ -82,4 +82,4 @@ jobs:
           user: aptalca
           project_id: 2
           resource_node_id: ${{ github.event.pull_request.node_id }}
-          status_value: 'PRs Ready For Team Review'
+          status_value: 'PRs Approved'
