@@ -1,0 +1,81 @@
+name: Issue & PR Tracker
+
+on:
+  issues:
+    types: [opened,reopened,labeled,unlabeled,closed]
+  pull_request_target:
+    types: [opened,reopened,review_requested,review_request_removed,labeled,unlabeled,closed]
+  pull_request_review:
+    types: [submitted,edited,dismissed]
+
+jobs:
+  manage-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add Open Docker Related Issues Not Labeled Invalid
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && startsWith(github.event.repository.name, 'docker-') && ! contains(github.event.issue.labels.*.name, 'invalid') }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Issues'
+      - name: Add Open Docker Related Issues Not Labeled Invalid (summary comment)
+        if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && startsWith(github.event.repository.name, 'docker-') && ! contains(github.event.issue.labels.*.name, 'invalid') }}
+        run: |
+          echo 'Issue #${{ github.event.issue.number }} added/moved to [project](https://github.com/users/aptalca/projects/2) column "Issues"' >> $GITHUB_STEP_SUMMARY
+      - name: Add Open Non-Docker Related Issues Not Labeled Invalid
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && ! startsWith(github.event.repository.name, 'docker-') && ! contains(github.event.issue.labels.*.name, 'invalid') }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Non-Docker Issues'
+      - name: Add Open Issues Labeled Invalid
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'invalid') }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Insufficient Info'
+      - name: Move Closed Issues and PRs to Done
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ github.event.issue.state == 'closed' || github.event.pull_request.state == 'closed' }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
+          status_value: 'Done'
+      - name: Add Open PRs Without Review Requests
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ (github.event_name == 'pull_request_target' || github.event_name == 'pull_request_review') && github.event.pull_request.state == 'open' && github.event.pull_request.requested_reviewers[0] == null && github.event.pull_request.requested_teams[0] == null && github.event.review.state != 'approved' }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.pull_request.node_id }}
+          status_value: 'PRs'
+      - name: Add Open PRs With Review Requests
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ (github.event_name == 'pull_request_target' || github.event_name == 'pull_request_review') && github.event.pull_request.state == 'open' && (github.event.pull_request.requested_reviewers[0] != null || github.event.pull_request.requested_teams[0] != null) && github.event.review.state != 'approved' }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.pull_request.node_id }}
+          status_value: 'PRs Ready For Team Review'
+      - name: Move Approved PRs
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        if: ${{ (github.event_name == 'pull_request_target' || github.event_name == 'pull_request_review') && github.event.pull_request.state == 'open' && github.event.review.state == 'approved' }}
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: aptalca
+          project_id: 2
+          resource_node_id: ${{ github.event.pull_request.node_id }}
+          status_value: 'PRs Ready For Team Review'
