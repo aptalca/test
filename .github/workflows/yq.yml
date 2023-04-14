@@ -8,5 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          ls_branch=$(curl -sX GET https://raw.githubusercontent.com/linuxserver/swag/master/jenkins-vars.yml | yq -r '.ls_branch')
+          ls_branch=$(curl -sX GET https://raw.githubusercontent.com/linuxserver/docker-swag/master/jenkins-vars.yml | yq -r '.ls_branch')
           echo "ls_branch is ${ls_branch}"
