@@ -10,4 +10,4 @@ jobs:
       - run: |
           ls_branch=$(curl -sX GET https://raw.githubusercontent.com/linuxserver/docker-swag/master/jenkins-vars.yml | yq -r '.ls_branch')
           echo "ls_branch is ${ls_branch}"
-          echo "Jenkins job `build url`: https://ci.linuxserver.io/blue/organizations/jenkins/Docker-Pipeline-Builders%2Fdocker-syncthing/activity/" >> $GITHUB_STEP_SUMMARY
+          echo "Jenkins job \`build url\`: https://ci.linuxserver.io/blue/organizations/jenkins/Docker-Pipeline-Builders%2Fdocker-syncthing/activity/" >> $GITHUB_STEP_SUMMARY
